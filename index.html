@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Surf Spots Москва — 12 этапов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+/* ЕДИНЫЙ ШРИФТ: чтобы заменить на фирменный шрифт Surf, достаточно поменять --font (и ссылку на шрифт выше) */
+:root{
+  --font:"Rubik",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --espresso:#33251e;   /* тёмно-кофейный: текст, основные кнопки */
+  --brown:#6e4c3b;      /* коричневый */
+  --burgundy:#7a2c2f;   /* бордовый: акценты, «многолюдно» */
+  --sand:#cbb69c;       /* песочный */
+  --beige:#ebe2d6;      /* бежевый: фоны блоков */
+  --cream:#f6f1ea;      /* светлый фон приложения */
+  --gray:#8a817a;       /* серый: второстепенный текст */
+  --line:#e0d5c7;
+  --white:#fffdf9;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#ddd3c6;color:var(--espresso);font-family:var(--font)}
+button,input{font-family:var(--font)}
+.app{max-width:440px;min-height:100vh;margin:auto;background:var(--cream);padding-bottom:88px;position:relative;box-shadow:0 0 50px #33251e1f}
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 13px}
+.logo{font-size:20px;font-weight:900;letter-spacing:.5px;text-transform:uppercase}
+.logo span{color:var(--burgundy)}
+.stepnum{font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--brown);background:var(--beige);padding:8px 11px;border-radius:20px}
+.progress{height:3px;background:var(--line);margin:0 22px 18px;border-radius:5px;overflow:hidden}
+.progress div{height:100%;background:var(--burgundy);width:8.33%;transition:width .2s}
+.screen{display:none;padding:0 22px 22px;animation:fade .2s}
+.screen.active{display:block}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:800;color:var(--burgundy);text-transform:uppercase}
+h1,h2,h3,.title{text-transform:uppercase}
+.hero{background:var(--espresso);color:var(--cream);border-radius:24px;padding:26px 25px;min-height:285px;position:relative;overflow:hidden}
+.hero .eyebrow{color:var(--sand)}
+.hero h1{font-size:34px;font-weight:900;line-height:1.02;letter-spacing:.3px;margin:15px 0 12px;max-width:290px;position:relative;z-index:1}
+.hero p{font-size:13px;line-height:1.55;color:#e3d6c6;max-width:265px;position:relative;z-index:1}
+.hero .btn{position:relative;z-index:1}
+.waves{position:absolute;right:-10px;bottom:-6px;width:230px;opacity:.9}
+h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;margin:11px 0}
+.desc{font-size:13px;line-height:1.55;color:var(--gray);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.option{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:15px;text-align:left;min-height:100px;cursor:pointer;color:var(--espresso);position:relative}
+.option .idx{display:block;font-size:11px;font-weight:700;color:var(--sand);margin-bottom:12px;letter-spacing:1px}
+.option strong{display:block;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+.option small{display:block;color:var(--gray);font-size:11px;line-height:1.4;margin-top:5px}
+.option::after{content:"→";position:absolute;right:14px;top:12px;font-size:14px;color:var(--line);transition:.15s}
+.option.selected{border:2px solid var(--burgundy);background:#f8ece8;padding:14px}
+.option.selected::after{content:"✓";color:var(--burgundy);right:13px;top:11px}
+.field{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:13px;background:var(--white);font-size:13px;outline-color:var(--burgundy);margin:8px 0 14px;color:var(--espresso)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.chip{border:1px solid var(--line);border-radius:30px;background:var(--white);color:var(--espresso);padding:10px 14px;font-size:12px;font-weight:500;cursor:pointer}
+.chip.selected{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+.chips.small{margin:4px 0 14px}.chips.small .chip{padding:8px 12px;font-size:11px}
+.btn{width:100%;border:0;border-radius:14px;padding:15px 17px;background:var(--espresso);color:var(--cream);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;margin-top:12px}
+.btn.light{background:var(--cream);color:var(--espresso)}
+.btn.secondary{background:var(--beige);color:var(--espresso)}
+.btn.accent{background:var(--burgundy);color:var(--cream)}
+.btn.outline{background:transparent;border:1.5px solid var(--espresso);color:var(--espresso)}
+.back{background:transparent;border:0;color:var(--brown);font-weight:700;padding:12px 0;cursor:pointer;font-size:13px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0}
+.card .name{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;cursor:pointer}
+.muted{font-size:11px;color:var(--gray);line-height:1.5;margin-top:5px}
+.badge{display:inline-block;background:var(--beige);color:var(--brown);font-size:10px;font-weight:700;letter-spacing:.8px;border-radius:8px;padding:6px 8px;margin-bottom:8px;text-transform:uppercase}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.facts{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 2px}
+.fact{font-size:11px;color:var(--brown);background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.fact b{font-weight:800;color:var(--espresso)}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.link{border:1px solid var(--line);background:var(--cream);border-radius:11px;padding:10px 11px;font-size:11px;font-weight:700;color:var(--espresso);text-align:left;cursor:pointer;text-transform:uppercase;letter-spacing:.4px}
+.link.dark{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+/* загруженность: цвет + количество делений, чтобы читалось и без цвета */
+.load{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700}
+.bars{display:inline-flex;gap:2px}.bars i{width:5px;height:11px;border-radius:2px;background:var(--line)}
+.load.l1 .bars i:nth-child(-n+1){background:var(--sand)}
+.load.l2 .bars i:nth-child(-n+2){background:var(--brown)}
+.load.l3 .bars i:nth-child(-n+3){background:var(--burgundy)}
+.load.l1{color:var(--brown)}.load.l2{color:var(--brown)}.load.l3{color:var(--burgundy)}
+/* карта */
+.map{height:320px;border-radius:22px;background:var(--beige);position:relative;overflow:hidden;border:1px solid var(--line)}
+.map svg.streets{position:absolute;inset:0;width:100%;height:100%}
+.maplabel{position:absolute;top:12px;left:12px;background:var(--white);padding:8px 10px;border-radius:9px;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;z-index:2}
+.spot{position:absolute;transform:translate(-50%,calc(-100% + 17px));border:0;background:none;padding:0;cursor:pointer;z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px}
+.spot .dot{width:34px;height:34px;border-radius:50%;border:3px solid var(--white);display:grid;place-items:center;color:var(--cream);font-weight:800;font-size:13px;box-shadow:0 4px 10px #33251e33}
+.spot.l1 .dot{background:var(--sand);color:var(--espresso)}.spot.l2 .dot{background:var(--brown)}.spot.l3 .dot{background:var(--burgundy)}
+.spot .tag{background:var(--white);border-radius:8px;padding:5px 7px;font-size:10px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px #33251e1a;text-align:center;line-height:1.3}
+.spot .tag small{display:block;font-weight:500;color:var(--gray)}
+.me{position:absolute;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--espresso);box-shadow:0 0 0 6px #33251e22;z-index:2}
+.me-label{position:absolute;transform:translate(-50%,0);font-size:10px;font-weight:700;color:var(--espresso);z-index:2}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0 4px}
+.maplist .card{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;padding:13px 15px}
+.maplist .card .name{font-size:13px}
+/* карточка кофейни */
+.detailhero{border-radius:20px;background:var(--espresso);color:var(--cream);height:150px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.detailhero .big{font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;position:relative;z-index:1}
+.detailhero .eyebrow{color:var(--sand);position:relative;z-index:1}
+.detailhero .load{position:relative;z-index:1;color:var(--cream)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:13px 0}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:12px}
+.stat b{display:block;font-size:18px;font-weight:800}
+.stat small{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px}
+.amen{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.amen span{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:6px 10px;background:var(--cream)}
+.amen span.off{color:#b9b0a6;text-decoration:line-through}
+/* мероприятия */
+.event{display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:start}
+.when{background:var(--beige);border-radius:12px;padding:9px 6px;text-align:center}
+.when b{display:block;font-size:12px;font-weight:800;text-transform:uppercase}
+.when small{font-size:11px;color:var(--brown)}
+.event .ttl{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+.event .go{margin-top:9px;background:none;border:0;padding:0;font-size:11px;font-weight:700;color:var(--burgundy);cursor:pointer;text-transform:uppercase;letter-spacing:.5px}
+/* прочее */
+.bottom{position:absolute;bottom:0;left:0;right:0;height:72px;background:var(--white);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center}
+.nav{border:0;background:none;color:var(--gray);font-size:11px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;padding:8px 6px}
+.nav::before{content:"";width:18px;height:2px;border-radius:2px;background:transparent}
+.nav.active{color:var(--espresso);font-weight:800}.nav.active::before{background:var(--burgundy)}
+.note{font-size:10px;line-height:1.5;color:var(--gray);margin-top:15px}
+.summary{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:17px;margin:12px 0}
+.summary h3{font-size:13px;font-weight:800;letter-spacing:.5px;margin:0 0 7px}
+.summary p{font-size:12px;line-height:1.5;color:var(--gray);margin:0}
+.toast{display:none;position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);padding:12px 16px;border-radius:12px;font-size:12px;z-index:5;white-space:nowrap}
+@media(min-width:600px){body{padding:22px}.app{border-radius:28px;min-height:850px}.bottom{border-radius:0 0 28px 28px}}
+</style></head><body><main class="app">
+<header class="top"><div class="logo">surf<span>spots</span></div><div class="stepnum" id="stepNum">ЭТАП 1 / 12</div></header><div class="progress"><div id="progressFill"></div></div>
+
+<!-- 1. Старт -->
+<section class="screen active" id="s1"><div class="hero"><div class="eyebrow">Москва × Surf Coffee</div><h1>Твой город.<br>Твой Surf.</h1><p>Находим кофейню под настроение и планы: где свободнее, где есть розетки и что сегодня проходит в спотах рядом.</p><button class="btn light" onclick="next()">Начать подбор →</button>
+<svg class="waves" viewBox="0 0 230 90" fill="none" stroke="#6e4c3b" stroke-width="3" stroke-linecap="round"><path d="M5 30c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4"/><path d="M5 55c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4" stroke="#7a2c2f"/><path d="M5 80c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4" stroke="#cbb69c"/></svg></div>
+<div class="links" style="margin-top:12px"><button class="link" onclick="showEvents(null)">Афиша спотов →</button><button class="link" onclick="show(10)">Карта рядом →</button></div>
+<div class="summary"><h3>Как это работает</h3><p>12 простых шагов: укажи район, сценарий и что важно внутри — получи подходящий спот Surf Coffee, его загруженность и мероприятия.</p></div></section>
+
+<!-- 2. Район -->
+<section class="screen" id="s2"><div class="eyebrow">Шаг 02 · Локация</div><h1 class="title">Где ищем?</h1><p class="desc">Выбери удобный район или введи улицу, метро либо ориентир.</p><div class="grid"><button class="option" onclick="pick(this,'район','Центр')"><span class="idx">01</span><strong>Центр</strong><small>Мясницкая, Покровка, Чистые пруды</small></button><button class="option" onclick="pick(this,'район','У дома')"><span class="idx">02</span><strong>Рядом с домом</strong><small>Кофе в своём районе</small></button><button class="option" onclick="pick(this,'район','У работы')"><span class="idx">03</span><strong>Рядом с работой</strong><small>Кофе до или после дел</small></button><button class="option" onclick="pick(this,'район','Любой район')"><span class="idx">04</span><strong>Любой район</strong><small>Готов(а) доехать</small></button></div><input class="field" id="locationInput" placeholder="Например, метро Чистые пруды"><button class="btn" onclick="next()">Продолжить →</button></section>
+
+<!-- 3. Сценарий -->
+<section class="screen" id="s3"><div class="eyebrow">Шаг 03 · Сценарий</div><h1 class="title">Зачем тебе Surf?</h1><p class="desc">Подберём место под конкретный план.</p><div class="grid"><button class="option" onclick="pick(this,'сценарий','Работа')"><span class="idx">01</span><strong>Поработать</strong><small>Ноутбук, розетка, тишина</small></button><button class="option" onclick="pick(this,'сценарий','Встреча')"><span class="idx">02</span><strong>Встретиться</strong><small>Поболтать с друзьями</small></button><button class="option" onclick="pick(this,'сценарий','Мероприятие')"><span class="idx">03</span><strong>На событие</strong><small>Каппинг, кино, лекция</small></button><button class="option" onclick="pick(this,'сценарий','Учёба')"><span class="idx">04</span><strong>Учиться</strong><small>Подготовиться к паре</small></button></div><button class="btn" onclick="next()">Выбрать атмосферу →</button></section>
+
+<!-- 4. Атмосфера -->
+<section class="screen" id="s4"><div class="eyebrow">Шаг 04 · Атмосфера</div><h1 class="title">Какое настроение?</h1><p class="desc">Необязательно знать точный адрес — начнём с ощущений.</p><div class="grid"><button class="option" onclick="pick(this,'атмосфера','Спокойно')"><span class="idx">01</span><strong>Спокойно</strong><small>Меньше людей, тише</small></button><button class="option" onclick="pick(this,'атмосфера','Энергично')"><span class="idx">02</span><strong>Энергично</strong><small>Движение и люди</small></button><button class="option" onclick="pick(this,'атмосфера','Эстетично')"><span class="idx">03</span><strong>Эстетично</strong><small>Красивое место и фото</small></button><button class="option" onclick="pick(this,'атмосфера','Уютно')"><span class="idx">04</span><strong>Уютно</strong><small>Посидеть подольше</small></button></div><button class="btn" onclick="next()">Дальше →</button></section>
+
+<!-- 5. Напиток -->
+<section class="screen" id="s5"><div class="eyebrow">Шаг 05 · Напиток</div><h1 class="title">Что закажем?</h1><p class="desc">Отметь любимую категорию — это поможет настроить рекомендации.</p><div class="chips"><button class="chip" onclick="toggle(this)">Эспрессо</button><button class="chip" onclick="toggle(this)">Латте / капучино</button><button class="chip" onclick="toggle(this)">Холодный кофе</button><button class="chip" onclick="toggle(this)">Чай / матча</button><button class="chip" onclick="toggle(this)">Десерт</button><button class="chip" onclick="toggle(this)">Что-нибудь новое</button></div><div class="summary"><h3>Подсказка</h3><p>Меню может отличаться в разных кофейнях — уточняй актуальные позиции перед заказом.</p></div><button class="btn" onclick="next()">Учесть бюджет →</button></section>
+
+<!-- 6. Бюджет -->
+<section class="screen" id="s6"><div class="eyebrow">Шаг 06 · Бюджет</div><h1 class="title">На какую сумму?</h1><p class="desc">Это ориентир для планирования, а не официальный прайс сети.</p><div class="grid"><button class="option" onclick="pick(this,'бюджет','До 300 ₽')"><span class="idx">₽</span><strong>До 300 ₽</strong><small>Один напиток</small></button><button class="option" onclick="pick(this,'бюджет','300–500 ₽')"><span class="idx">₽₽</span><strong>300–500 ₽</strong><small>Напиток и перекус</small></button><button class="option" onclick="pick(this,'бюджет','500–800 ₽')"><span class="idx">₽₽₽</span><strong>500–800 ₽</strong><small>Посидеть подольше</small></button><button class="option" onclick="pick(this,'бюджет','Неважно')"><span class="idx">—</span><strong>Неважно</strong><small>Главное — атмосфера</small></button></div><button class="btn" onclick="next()">Уточнить удобства →</button></section>
+
+<!-- 7. Удобства -->
+<section class="screen" id="s7"><div class="eyebrow">Шаг 07 · Удобства</div><h1 class="title">Что важно внутри?</h1><p class="desc">Выбери один или несколько пунктов — споты с ними поднимутся в подборке выше.</p><div class="chips"><button class="chip" data-a="sockets" onclick="toggle(this)">Розетки для ноутбука</button><button class="chip" data-a="seats" onclick="toggle(this)">Много посадочных мест</button><button class="chip" data-a="wifi" onclick="toggle(this)">Wi-Fi</button><button class="chip" data-a="quiet" onclick="toggle(this)">Тихая зона</button><button class="chip" data-a="events" onclick="toggle(this)">Мероприятия</button><button class="chip" data-a="pets" onclick="toggle(this)">Можно с питомцем</button><button class="chip" data-a="access" onclick="toggle(this)">Доступная среда</button><button class="chip" data-a="takeaway" onclick="toggle(this)">Удобно с собой</button></div><div class="summary"><h3>Важно</h3><p>В демо-версии данные об удобствах примерные. Перед визитом лучше уточнить у кофейни.</p></div><button class="btn" onclick="next()">Выбрать время визита →</button></section>
+
+<!-- 8. Время -->
+<section class="screen" id="s8"><div class="eyebrow">Шаг 08 · Время</div><h1 class="title">Когда планируешь зайти?</h1><p class="desc">От времени зависит загруженность. Актуальные часы работы проверяй отдельно.</p><div class="grid"><button class="option" onclick="pick(this,'время','Утро')"><span class="idx">08–11</span><strong>Утром</strong><small>Кофе перед началом дня</small></button><button class="option" onclick="pick(this,'время','Днём')"><span class="idx">12–17</span><strong>Днём</strong><small>Перерыв или встреча</small></button><button class="option" onclick="pick(this,'время','Вечером')"><span class="idx">18–21</span><strong>Вечером</strong><small>Время мероприятий</small></button><button class="option" onclick="pick(this,'время','Поздно')"><span class="idx">21+</span><strong>Поздно</strong><small>Проверить часы работы</small></button></div><button class="btn" onclick="next()">Посмотреть подборку →</button></section>
+
+<!-- 9. Подборка -->
+<section class="screen" id="s9"><div class="eyebrow">Шаг 09 · Подборка</div><h1 class="title">Твой Surf-лист</h1><p class="desc">Три спота рядом друг с другом. Отсортируй по тому, что важнее.</p>
+<div class="chips small" id="sortChips"><button class="chip selected" data-s="match" onclick="setSort(this)">Подходит мне</button><button class="chip" data-s="load" onclick="setSort(this)">Свободнее</button><button class="chip" data-s="seats" onclick="setSort(this)">Больше мест</button><button class="chip" data-s="sockets" onclick="setSort(this)">Розетки</button><button class="chip" data-s="events" onclick="setSort(this)">Мероприятия</button></div>
+<div id="results"></div><button class="btn secondary" onclick="next()">Открыть карту →</button></section>
+
+<!-- 10. Карта -->
+<section class="screen" id="s10"><div class="eyebrow">Шаг 10 · Карта</div><h1 class="title">Споты рядом</h1><p class="desc">Схема для демонстрации: три кофейни в нескольких минутах пешком друг от друга.</p>
+<div class="map" id="map">
+<svg class="streets" viewBox="0 0 400 320" preserveAspectRatio="none" fill="none" stroke-linecap="round">
+  <path d="M-10 95 L410 150" stroke="#fffdf9" stroke-width="14"/>
+  <path d="M120 -10 L175 330" stroke="#fffdf9" stroke-width="10"/>
+  <path d="M-10 250 C120 230 260 250 410 215" stroke="#fffdf9" stroke-width="8"/>
+  <path d="M290 -10 L265 330" stroke="#fffdf9" stroke-width="6"/>
+  <path d="M60 175 L250 170" stroke="#e0d5c7" stroke-width="3" stroke-dasharray="2 7"/>
+  <path d="M250 170 L318 92" stroke="#e0d5c7" stroke-width="3" stroke-dasharray="2 7"/>
+</svg>
+<div class="maplabel">Москва · центр</div>
+<div id="spots"></div>
+<div class="me" style="left:40%;top:72%"></div><div class="me-label" style="left:40%;top:76%">Вы здесь</div>
+</div>
+<div class="legend"><span class="load l1"><span class="bars"><i></i><i></i><i></i></span>Свободно</span><span class="load l2"><span class="bars"><i></i><i></i><i></i></span>Средне</span><span class="load l3"><span class="bars"><i></i><i></i><i></i></span>Многолюдно</span></div>
+<div class="maplist" id="mapList"></div>
+<button class="btn" onclick="detail(bestIndex())">Открыть самый свободный спот →</button></section>
+
+<!-- 11. Карточка -->
+<section class="screen" id="s11"><div class="eyebrow">Шаг 11 · Карточка места</div><div style="height:10px"></div>
+<div class="detailhero"><svg class="waves" viewBox="0 0 230 90" fill="none" stroke="#6e4c3b" stroke-width="3" stroke-linecap="round" style="width:190px;opacity:.6"><path d="M5 40c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4"/><path d="M5 65c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4" stroke="#7a2c2f"/></svg><div class="eyebrow">Surf Coffee · Москва</div><div><div class="big" id="detailName">Мясницкая</div><div id="detailLoad"></div></div></div>
+<p class="desc" style="margin-top:14px" id="detailAddr">Адрес уточняется перед визитом</p>
+<div class="stats"><div class="stat"><b id="stSeats">—</b><small>мест</small></div><div class="stat"><b id="stSockets">—</b><small>розеток</small></div><div class="stat"><b id="stWalk">—</b><small>пешком</small></div></div>
+<div class="summary"><h3>Удобства</h3><div class="amen" id="detailAmen"></div></div>
+<div class="summary"><h3>Почему может подойти</h3><p id="detailDesc"></p></div>
+<div class="summary" id="detailEventsBox"><div class="row"><h3 style="margin:0">Мероприятия здесь</h3><span class="badge" style="margin:0" id="detailEvCount">0</span></div><div id="detailEvents" style="margin-top:8px"></div></div>
+<button class="btn accent" id="detailEvBtn">Все мероприятия спота →</button>
+<button class="btn" onclick="toast('Маршрут в демо-версии не строится автоматически')">Построить маршрут ↗</button>
+<button class="btn secondary" onclick="saveSpot()">Сохранить в избранное</button>
+<div class="row"><button class="back" onclick="show(9)">← К подборке</button><button class="back" onclick="next()">Итог →</button></div></section>
+
+<!-- 12. Итог -->
+<section class="screen" id="s12"><div class="eyebrow">Шаг 12 · Финиш</div><h1 class="title">План готов</h1><p class="desc">Ты прошёл весь сценарий подбора Surf Coffee в Москве.</p><div class="hero" style="min-height:190px"><div class="eyebrow">Твой маршрут</div><h1 style="font-size:27px">Выбери спот.<br>Закажи любимое.</h1><p id="finalSpot">Сохрани понравившуюся кофейню и проверь детали перед выходом.</p><svg class="waves" viewBox="0 0 230 90" fill="none" stroke="#6e4c3b" stroke-width="3" stroke-linecap="round" style="width:180px"><path d="M5 55c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4"/><path d="M5 80c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4" stroke="#7a2c2f"/></svg></div><div class="summary"><h3>Твои предпочтения</h3><p id="prefs">Пока не выбраны — можно вернуться и отметить их.</p></div><button class="btn" onclick="show(9)">Вернуться к рекомендациям</button><button class="btn accent" onclick="showEvents(null)">Смотреть афишу спотов →</button><button class="btn secondary" onclick="restart()">Начать заново</button><p class="note">Прототип создан для учебной демонстрации. Названия точек, загруженность, удобства и мероприятия — примерные; перед визитом проверяйте актуальные данные Surf Coffee.</p></section>
+
+<!-- Афиша (вне 12 этапов, открывается из меню и карточек) -->
+<section class="screen" id="s13"><div class="eyebrow">Афиша · споты рядом</div><h1 class="title">Мероприятия</h1><p class="desc">Что проходит в кофейнях на этой неделе. Нажми на событие, чтобы перейти в кофейню.</p><div class="chips small" id="evFilter"></div><div id="eventsList"></div><button class="back" onclick="show(lastStage)">← Назад</button></section>
+
+<nav class="bottom"><button class="nav active" onclick="show(1)">Главная</button><button class="nav" onclick="showEvents(null)">Афиша</button><button class="nav" onclick="show(10)">Карта</button><button class="nav" onclick="show(12)">Итог</button></nav><div class="toast" id="toast"></div>
+</main>
+<script>
+let stage=1, lastStage=1, prefs={}, saved=[], sortKey='match', evCafe=null;
+const LOAD=['','Свободно','Средне','Многолюдно'];
+const AMEN={sockets:'Розетки',seats:'Много мест',wifi:'Wi-Fi',quiet:'Тихая зона',events:'Мероприятия',pets:'С питомцем',access:'Доступная среда',takeaway:'С собой'};
+// Демо-данные: три спота в центре рядом друг с другом, с разной загруженностью
+const cafes=[
+ {name:'Покровка',area:'район Покровки · точный адрес уточняется',load:1,seats:56,sockets:20,walk:'4 мин',x:80,y:29,
+  amen:['sockets','seats','wifi','quiet','events','access','takeaway'],
+  desc:'Самый свободный из трёх: большой зал, розетки почти у каждого стола, есть тихая зона — удобно поработать с ноутбуком или поучиться.'},
+ {name:'Чистые пруды',area:'район Чистых прудов · точный адрес уточняется',load:2,seats:34,sockets:10,walk:'3 мин',x:62,y:53,
+  amen:['sockets','seats','wifi','events','pets','takeaway'],
+  desc:'Средняя загрузка и больше всего мероприятий по вечерам — хороший вариант для встречи с друзьями и событий.'},
+ {name:'Мясницкая',area:'район Мясницкой улицы · точный адрес уточняется',load:3,seats:22,sockets:4,walk:'6 мин',x:15,y:55,
+  amen:['wifi','takeaway','events'],
+  desc:'Самый оживлённый спот: много гостей в течение дня. Удобно взять кофе с собой или быстро встретиться.'}
+];
+const events=[
+ {cafe:1,day:'Пт',time:'19:00',title:'Каппинг для новичков',text:'Пробуем зерно разных обжарок и учимся различать вкус.'},
+ {cafe:0,day:'Сб',time:'11:00',title:'Тихий коворкинг-день',text:'Зал работает в тихом режиме, розетки у каждого места.'},
+ {cafe:1,day:'Сб',time:'20:00',title:'Показ серф-фильма',text:'Кино про сёрфинг и путешествия, после — общение.'},
+ {cafe:2,day:'Вс',time:'13:00',title:'Латте-арт с бариста',text:'Короткий мастер-класс у бара, небольшая группа.'},
+ {cafe:0,day:'Вт',time:'19:30',title:'Лекция о кофейных регионах',text:'Откуда приезжает зерно и как это влияет на вкус.'},
+ {cafe:1,day:'Чт',time:'19:00',title:'Вечер винила',text:'Музыка с пластинок и сезонное меню.'}
+];
+const evOf=i=>events.filter(e=>e.cafe===i);
+const loadHtml=l=>`<span class="load l${l}"><span class="bars"><i></i><i></i><i></i></span>${LOAD[l]}</span>`;
+
+function show(n){
+  if(n!==13){stage=Math.max(1,Math.min(12,n));lastStage=stage}else stage=13;
+  document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id==='s'+stage));
+  document.getElementById('stepNum').textContent=stage===13?'АФИША':`ЭТАП ${stage} / 12`;
+  document.getElementById('progressFill').style.width=(stage===13?100:stage/12*100)+'%';
+  document.querySelectorAll('.nav').forEach((el,i)=>el.classList.toggle('active',[1,13,10,12][i]===stage));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(stage===9)renderResults(); if(stage===10)renderMap(); if(stage===12)renderPrefs(); if(stage===13)renderEvents();
+}
+function next(){show(stage+1)}
+function restart(){prefs={};document.querySelectorAll('.selected').forEach(e=>{if(!e.closest('#sortChips'))e.classList.remove('selected')});show(1)}
+function pick(el,key,value){el.parentElement.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');prefs[key]=value}
+function toggle(el){el.classList.toggle('selected');prefs[el.textContent.trim()]=el.classList.contains('selected')}
+function wanted(){return [...document.querySelectorAll('#s7 .chip.selected')].map(c=>c.dataset.a)}
+function score(c,i){
+  let s=wanted().filter(a=>c.amen.includes(a)).length*3;
+  const sc=prefs['сценарий'], at=prefs['атмосфера'];
+  if(sc==='Работа'||sc==='Учёба') s+=c.sockets/5+(4-c.load);
+  if(sc==='Мероприятие') s+=evOf(i).length*2;
+  if(sc==='Встреча') s+=c.seats/20;
+  if(at==='Спокойно'||at==='Уютно') s+=(4-c.load)*1.5;
+  if(at==='Энергично') s+=c.load;
+  return s;
+}
+function order(){
+  const idx=cafes.map((c,i)=>i), f={
+    match:i=>-score(cafes[i],i), load:i=>cafes[i].load, seats:i=>-cafes[i].seats,
+    sockets:i=>-cafes[i].sockets, events:i=>-evOf(i).length};
+  return idx.sort((a,b)=>f[sortKey](a)-f[sortKey](b));
+}
+function bestIndex(){return cafes.map((c,i)=>i).sort((a,b)=>cafes[a].load-cafes[b].load)[0]}
+function setSort(el){document.querySelectorAll('#sortChips .chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');sortKey=el.dataset.s;renderResults()}
+function renderResults(){
+  document.getElementById('results').innerHTML=order().map((i,pos)=>{const c=cafes[i],n=evOf(i).length;return `
+  <div class="card"><div class="row"><span class="badge">${pos===0?'Лучший вариант':'Вариант '+(pos+1)}</span>${loadHtml(c.load)}</div>
+  <div class="name" onclick="detail(${i})">Surf Coffee · ${c.name}</div><div class="muted">${c.area} · ${c.walk} пешком</div>
+  <div class="facts"><span class="fact"><b>${c.seats}</b> мест</span><span class="fact"><b>${c.sockets}</b> розеток</span><span class="fact"><b>${n}</b> ${n===1?'событие':n<5&&n>1?'события':'событий'}</span></div>
+  <div class="links"><button class="link dark" onclick="detail(${i})">Открыть спот →</button><button class="link" onclick="showEvents(${i})">Мероприятия →</button></div></div>`}).join('');
+}
+function renderMap(){
+  document.getElementById('spots').innerHTML=cafes.map((c,i)=>`<button class="spot l${c.load}" style="left:${c.x}%;top:${c.y}%" onclick="detail(${i})"><span class="tag">${c.name}<small>${LOAD[c.load]}</small></span><span class="dot">${i+1}</span></button>`).join('');
+  document.getElementById('mapList').innerHTML=cafes.map((c,i)=>`<div class="card" onclick="detail(${i})"><div><div class="name">${i+1} · ${c.name}</div><div class="muted">${c.walk} пешком · ${c.seats} мест · ${c.sockets} розеток</div></div>${loadHtml(c.load)}</div>`).join('');
+}
+function detail(i){
+  const c=cafes[i];window.currentCafe=i;
+  document.getElementById('detailName').textContent=c.name;
+  document.getElementById('detailLoad').innerHTML=loadHtml(c.load)+'<span style="font-size:11px;opacity:.75"> · сейчас</span>';
+  document.getElementById('detailAddr').textContent='Surf Coffee · '+c.area;
+  document.getElementById('stSeats').textContent=c.seats;
+  document.getElementById('stSockets').textContent=c.sockets;
+  document.getElementById('stWalk').textContent=c.walk;
+  document.getElementById('detailAmen').innerHTML=Object.keys(AMEN).map(k=>`<span class="${c.amen.includes(k)?'':'off'}">${AMEN[k]}</span>`).join('');
+  document.getElementById('detailDesc').textContent=c.desc;
+  const ev=evOf(i);
+  document.getElementById('detailEvCount').textContent=ev.length;
+  document.getElementById('detailEvents').innerHTML=ev.length?ev.slice(0,2).map(e=>evHtml(e,true)).join(''):'<p>На этой неделе событий нет.</p>';
+  document.getElementById('detailEvBtn').onclick=()=>showEvents(i);
+  show(11);
+}
+function evHtml(e,inCafe){const c=cafes[e.cafe];return `<div class="card event"><div class="when"><b>${e.day}</b><small>${e.time}</small></div><div><div class="ttl">${e.title}</div><div class="muted">${e.text}</div><div class="muted">Surf Coffee · ${c.name} · ${LOAD[c.load].toLowerCase()} · ${c.seats} мест</div>${inCafe?'':`<button class="go" onclick="detail(${e.cafe})">Перейти в кофейню →</button>`}</div></div>`}
+function showEvents(i){evCafe=i;show(13)}
+function renderEvents(){
+  const opts=[[null,'Все споты'],...cafes.map((c,i)=>[i,c.name])];
+  document.getElementById('evFilter').innerHTML=opts.map(([i,n])=>`<button class="chip ${evCafe===i?'selected':''}" onclick="evCafe=${i};renderEvents()">${n}</button>`).join('');
+  const list=evCafe===null?events:evOf(evCafe);
+  document.getElementById('eventsList').innerHTML=list.length?list.map(e=>evHtml(e)).join(''):'<p class="desc">Пока нет событий.</p>';
+}
+function saveSpot(){if(typeof window.currentCafe==='number'&&!saved.includes(window.currentCafe))saved.push(window.currentCafe);toast('Кофейня сохранена в избранное')}
+function renderPrefs(){
+  const vals=Object.entries(prefs).filter(([k,v])=>v===true||typeof v==='string').map(([k,v])=>typeof v==='string'?k+': '+v:k);
+  document.getElementById('prefs').textContent=vals.length?vals.join(' · '):'Пока не выбраны — можно вернуться и отметить их.';
+  const best=cafes.map((c,i)=>i).sort((a,b)=>score(cafes[b],b)-score(cafes[a],a))[0];
+  document.getElementById('finalSpot').textContent=saved.length?'Сохранено: '+saved.map(i=>cafes[i].name).join(', ')+'.':'Рекомендуем: Surf Coffee · '+cafes[best].name+' ('+LOAD[cafes[best].load].toLowerCase()+').';
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+</script></body></html>
