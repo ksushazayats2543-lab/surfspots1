@@ -119,6 +119,20 @@ h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;mar
 .summary h3{font-size:13px;font-weight:800;letter-spacing:.5px;margin:0 0 7px}
 .summary p{font-size:12px;line-height:1.5;color:var(--gray);margin:0}
 .toast{display:none;position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);padding:12px 16px;border-radius:12px;font-size:12px;z-index:5;white-space:nowrap}
+.location-actions{margin:-2px 0 14px}
+.location-status{font-size:11px;line-height:1.5;color:var(--gray);margin:7px 2px 0;min-height:17px}
+.cafe-photo{height:138px;border-radius:13px;overflow:hidden;background:linear-gradient(135deg,#cbb69c,#6e4c3b);position:relative;margin:0 0 13px}
+.cafe-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo-caption{position:absolute;left:9px;bottom:9px;padding:5px 8px;border-radius:7px;background:#33251ecc;color:#fffdf9;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.detail-photo{height:185px;border-radius:19px;overflow:hidden;background:linear-gradient(135deg,#cbb69c,#6e4c3b);margin:0 0 12px}
+.detail-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.form-label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin:13px 0 6px}
+.support-field{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--white);padding:12px;color:var(--espresso);font:12px/1.5 var(--font);outline-color:var(--burgundy)}
+.support-field:focus,.field:focus{border-color:var(--burgundy);box-shadow:0 0 0 3px #7a2c2f18}
+button:focus-visible{outline:3px solid var(--burgundy);outline-offset:3px}
+.nav{font-size:9px;letter-spacing:.2px;flex:1;min-width:0}
+.nav::before{width:16px}
+.bottom{padding:0 5px}
 @media(min-width:600px){body{padding:22px}.app{border-radius:28px;min-height:850px}.bottom{border-radius:0 0 28px 28px}}
 </style></head><body><main class="app">
 <header class="top"><div class="logo">surf<span>spots</span></div><div class="stepnum" id="stepNum">ЭТАП 1 / 12</div></header><div class="progress"><div id="progressFill"></div></div>
@@ -130,7 +144,7 @@ h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;mar
 <div class="summary"><h3>Как это работает</h3><p>12 простых шагов: укажи район, сценарий и что важно внутри — получи подходящий спот Surf Coffee, его загруженность и мероприятия.</p></div></section>
 
 <!-- 2. Район -->
-<section class="screen" id="s2"><div class="eyebrow">Шаг 02 · Локация</div><h1 class="title">Где ищем?</h1><p class="desc">Выбери удобный район или введи улицу, метро либо ориентир.</p><div class="grid"><button class="option" onclick="pick(this,'район','Центр')"><span class="idx">01</span><strong>Центр</strong><small>Мясницкая, Покровка, Чистые пруды</small></button><button class="option" onclick="pick(this,'район','У дома')"><span class="idx">02</span><strong>Рядом с домом</strong><small>Кофе в своём районе</small></button><button class="option" onclick="pick(this,'район','У работы')"><span class="idx">03</span><strong>Рядом с работой</strong><small>Кофе до или после дел</small></button><button class="option" onclick="pick(this,'район','Любой район')"><span class="idx">04</span><strong>Любой район</strong><small>Готов(а) доехать</small></button></div><input class="field" id="locationInput" placeholder="Например, метро Чистые пруды"><button class="btn" onclick="next()">Продолжить →</button></section>
+<section class="screen" id="s2"><div class="eyebrow">Шаг 02 · Локация</div><h1 class="title">Где ищем?</h1><p class="desc">Выбери район, введи улицу или метро либо попробуй определить своё местоположение.</p><div class="grid"><button class="option" onclick="pick(this,'район','Центр')"><span class="idx">01</span><strong>Центр</strong><small>Мясницкая, Покровка, Чистые пруды</small></button><button class="option" onclick="pick(this,'район','У дома')"><span class="idx">02</span><strong>Рядом с домом</strong><small>Кофе в своём районе</small></button><button class="option" onclick="pick(this,'район','У работы')"><span class="idx">03</span><strong>Рядом с работой</strong><small>Кофе до или после дел</small></button><button class="option" onclick="pick(this,'район','Любой район')"><span class="idx">04</span><strong>Любой район</strong><small>Готов(а) доехать</small></button></div><input class="field" id="locationInput" autocomplete="street-address" placeholder="Например, метро Чистые пруды" aria-label="Район, улица или станция метро"><div class="location-actions"><button class="btn secondary" type="button" onclick="detectLocation()">◎ Определить моё местоположение</button><p class="location-status" id="locationStatus" aria-live="polite">Геопозиция используется только после твоего нажатия. Автоматический поиск реальных филиалов в демо пока не подключён.</p></div><button class="btn" onclick="next()">Продолжить →</button></section>
 
 <!-- 3. Сценарий -->
 <section class="screen" id="s3"><div class="eyebrow">Шаг 03 · Сценарий</div><h1 class="title">Зачем тебе Surf?</h1><p class="desc">Подберём место под конкретный план.</p><div class="grid"><button class="option" onclick="pick(this,'сценарий','Работа')"><span class="idx">01</span><strong>Поработать</strong><small>Ноутбук, розетка, тишина</small></button><button class="option" onclick="pick(this,'сценарий','Встреча')"><span class="idx">02</span><strong>Встретиться</strong><small>Поболтать с друзьями</small></button><button class="option" onclick="pick(this,'сценарий','Мероприятие')"><span class="idx">03</span><strong>На событие</strong><small>Каппинг, кино, лекция</small></button><button class="option" onclick="pick(this,'сценарий','Учёба')"><span class="idx">04</span><strong>Учиться</strong><small>Подготовиться к паре</small></button></div><button class="btn" onclick="next()">Выбрать атмосферу →</button></section>
@@ -168,7 +182,7 @@ h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;mar
 </svg>
 <div class="maplabel">Москва · центр</div>
 <div id="spots"></div>
-<div class="me" style="left:40%;top:72%"></div><div class="me-label" style="left:40%;top:76%">Вы здесь</div>
+<div class="me" style="left:40%;top:72%"></div><div class="me-label" style="left:40%;top:76%">Стартовая точка · демо</div>
 </div>
 <div class="legend"><span class="load l1"><span class="bars"><i></i><i></i><i></i></span>Свободно</span><span class="load l2"><span class="bars"><i></i><i></i><i></i></span>Средне</span><span class="load l3"><span class="bars"><i></i><i></i><i></i></span>Многолюдно</span></div>
 <div class="maplist" id="mapList"></div>
@@ -177,10 +191,10 @@ h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;mar
 <!-- 11. Карточка -->
 <section class="screen" id="s11"><div class="eyebrow">Шаг 11 · Карточка места</div><div style="height:10px"></div>
 <div class="detailhero"><svg class="waves" viewBox="0 0 230 90" fill="none" stroke="#6e4c3b" stroke-width="3" stroke-linecap="round" style="width:190px;opacity:.6"><path d="M5 40c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4"/><path d="M5 65c20-14 40-14 60 0s40 14 60 0 40-14 60 0 30 10 45 4" stroke="#7a2c2f"/></svg><div class="eyebrow">Surf Coffee · Москва</div><div><div class="big" id="detailName">Мясницкая</div><div id="detailLoad"></div></div></div>
-<p class="desc" style="margin-top:14px" id="detailAddr">Адрес уточняется перед визитом</p>
+<div class="detail-photo" id="detailPhoto" aria-label="Иллюстративное фото кофейни"></div><p class="desc" style="margin-top:14px" id="detailAddr">Адрес уточняется перед визитом</p>
 <div class="stats"><div class="stat"><b id="stSeats">—</b><small>мест</small></div><div class="stat"><b id="stSockets">—</b><small>розеток</small></div><div class="stat"><b id="stWalk">—</b><small>пешком</small></div></div>
 <div class="summary"><h3>Удобства</h3><div class="amen" id="detailAmen"></div></div>
-<div class="summary"><h3>Почему может подойти</h3><p id="detailDesc"></p></div>
+<div class="summary"><h3>Почему может подойти</h3><p id="detailDesc"></p></div><div class="summary"><h3>Перед визитом</h3><p>Фото носит иллюстративный характер. Адрес, часы работы, наличие удобств и текущую загруженность нужно проверить у конкретного филиала. Цифры и статусы в этом прототипе — демонстрационные, не актуальные данные сети.</p></div>
 <div class="summary" id="detailEventsBox"><div class="row"><h3 style="margin:0">Мероприятия здесь</h3><span class="badge" style="margin:0" id="detailEvCount">0</span></div><div id="detailEvents" style="margin-top:8px"></div></div>
 <button class="btn accent" id="detailEvBtn">Все мероприятия спота →</button>
 <button class="btn" onclick="toast('Маршрут в демо-версии не строится автоматически')">Построить маршрут ↗</button>
@@ -193,7 +207,7 @@ h1.title{font-size:27px;font-weight:900;line-height:1.08;letter-spacing:.2px;mar
 <!-- Афиша (вне 12 этапов, открывается из меню и карточек) -->
 <section class="screen" id="s13"><div class="eyebrow">Афиша · споты рядом</div><h1 class="title">Мероприятия</h1><p class="desc">Что проходит в кофейнях на этой неделе. Нажми на событие, чтобы перейти в кофейню.</p><div class="chips small" id="evFilter"></div><div id="eventsList"></div><button class="back" onclick="show(lastStage)">← Назад</button></section>
 
-<nav class="bottom"><button class="nav active" onclick="show(1)">Главная</button><button class="nav" onclick="showEvents(null)">Афиша</button><button class="nav" onclick="show(10)">Карта</button><button class="nav" onclick="show(12)">Итог</button></nav><div class="toast" id="toast"></div>
+<section class="screen" id="s14"><div class="eyebrow">Поддержка · обратная связь</div><h1 class="title">Помочь сделать Surf Spots лучше?</h1><p class="desc">Расскажи о неточности в карточке или проблеме в прототипе.</p><div class="summary"><h3>Что можно сообщить</h3><p>Ошибка в информации о кофейне, неудобство при выборе района, проблема с картой или идея для улучшения.</p></div><label class="form-label" for="supportTopic">Тема обращения</label><select id="supportTopic" class="support-field"><option>Ошибка в информации о кофейне</option><option>Проблема с выбором местоположения</option><option>Проблема с картой</option><option>Предложение по улучшению</option><option>Другое</option></select><label class="form-label" for="supportMessage">Сообщение</label><textarea id="supportMessage" class="support-field" rows="5" placeholder="Опиши, что произошло или что хотелось бы улучшить..."></textarea><button class="btn accent" onclick="copySupport()">Скопировать обращение</button><p class="note">В учебной демо-версии отправка обращений напрямую пока не подключена. Кнопка подготовит текст, который можно передать команде проекта.</p><button class="back" onclick="show(lastStage)">← Назад</button></section><nav class="bottom"><button class="nav active" onclick="show(1)">Главная</button><button class="nav" onclick="show(10)">Карта</button><button class="nav" onclick="showEvents(null)">Афиша</button><button class="nav" onclick="show(14)">Помощь</button><button class="nav" onclick="show(12)">Итог</button></nav><div class="toast" id="toast"></div>
 </main>
 <script>
 let stage=1, lastStage=1, prefs={}, saved=[], sortKey='match', evCafe=null;
@@ -201,13 +215,13 @@ const LOAD=['','Свободно','Средне','Многолюдно'];
 const AMEN={sockets:'Розетки',seats:'Много мест',wifi:'Wi-Fi',quiet:'Тихая зона',events:'Мероприятия',pets:'С питомцем',access:'Доступная среда',takeaway:'С собой'};
 // Демо-данные: три спота в центре рядом друг с другом, с разной загруженностью
 const cafes=[
- {name:'Покровка',area:'район Покровки · точный адрес уточняется',load:1,seats:56,sockets:20,walk:'4 мин',x:80,y:29,
+ {name:'Покровка',area:'район Покровки · точный адрес уточняется',photo:'https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=82',load:1,seats:56,sockets:20,walk:'4 мин',x:80,y:29,
   amen:['sockets','seats','wifi','quiet','events','access','takeaway'],
   desc:'Самый свободный из трёх: большой зал, розетки почти у каждого стола, есть тихая зона — удобно поработать с ноутбуком или поучиться.'},
- {name:'Чистые пруды',area:'район Чистых прудов · точный адрес уточняется',load:2,seats:34,sockets:10,walk:'3 мин',x:62,y:53,
+ {name:'Чистые пруды',area:'район Чистых прудов · точный адрес уточняется',photo:'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=82',load:2,seats:34,sockets:10,walk:'3 мин',x:62,y:53,
   amen:['sockets','seats','wifi','events','pets','takeaway'],
   desc:'Средняя загрузка и больше всего мероприятий по вечерам — хороший вариант для встречи с друзьями и событий.'},
- {name:'Мясницкая',area:'район Мясницкой улицы · точный адрес уточняется',load:3,seats:22,sockets:4,walk:'6 мин',x:15,y:55,
+ {name:'Мясницкая',area:'район Мясницкой улицы · точный адрес уточняется',photo:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=82',load:3,seats:22,sockets:4,walk:'6 мин',x:15,y:55,
   amen:['wifi','takeaway','events'],
   desc:'Самый оживлённый спот: много гостей в течение дня. Удобно взять кофе с собой или быстро встретиться.'}
 ];
@@ -223,15 +237,60 @@ const evOf=i=>events.filter(e=>e.cafe===i);
 const loadHtml=l=>`<span class="load l${l}"><span class="bars"><i></i><i></i><i></i></span>${LOAD[l]}</span>`;
 
 function show(n){
-  if(n!==13){stage=Math.max(1,Math.min(12,n));lastStage=stage}else stage=13;
+  if(n===13||n===14){stage=n}else{stage=Math.max(1,Math.min(12,n));lastStage=stage}
   document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id==='s'+stage));
-  document.getElementById('stepNum').textContent=stage===13?'АФИША':`ЭТАП ${stage} / 12`;
-  document.getElementById('progressFill').style.width=(stage===13?100:stage/12*100)+'%';
-  document.querySelectorAll('.nav').forEach((el,i)=>el.classList.toggle('active',[1,13,10,12][i]===stage));
+  document.getElementById('stepNum').textContent=stage===13?'АФИША':stage===14?'ПОМОЩЬ':'ЭТАП '+stage+' / 12';
+  document.getElementById('progressFill').style.width=(stage>=13?100:stage/12*100)+'%';
+  document.querySelectorAll('.nav').forEach((el,i)=>el.classList.toggle('active',[1,10,13,14,12][i]===stage));
   window.scrollTo({top:0,behavior:'smooth'});
   if(stage===9)renderResults(); if(stage===10)renderMap(); if(stage===12)renderPrefs(); if(stage===13)renderEvents();
 }
-function next(){show(stage+1)}
+function next(){
+  if(stage===2){
+    const v=document.getElementById('locationInput').value.trim();
+    if(v)prefs['адрес / ориентир']=v;
+  }
+  show(stage+1);
+}
+function detectLocation(){
+  const status=document.getElementById('locationStatus');
+  if(!navigator.geolocation){
+    status.textContent='Этот браузер не поддерживает определение геопозиции. Введи район, улицу или метро вручную.';
+    return;
+  }
+  status.textContent='Запрашиваем разрешение на геопозицию…';
+  navigator.geolocation.getCurrentPosition(
+    position=>{
+      document.getElementById('locationInput').value='Моё местоположение';
+      prefs['геопозиция']='определена';
+      status.textContent='Геопозиция определена. Важно: демо-подборка пока показывает условные споты в центре Москвы, а не реальные ближайшие филиалы.';
+    },
+    error=>{
+      const messages={
+        1:'Доступ к геопозиции запрещён. Разреши его в настройках браузера или введи адрес вручную.',
+        2:'Не удалось определить местоположение. Попробуй ещё раз или введи адрес вручную.',
+        3:'Истекло время ожидания геопозиции. Попробуй ещё раз или введи адрес вручную.'
+      };
+      status.textContent=messages[error.code]||'Не удалось определить местоположение. Введи адрес вручную.';
+    },
+    {enableHighAccuracy:false,timeout:10000,maximumAge:60000}
+  );
+}
+function copySupport(){
+  const topic=document.getElementById('supportTopic').value;
+  const message=document.getElementById('supportMessage').value.trim();
+  if(!message){toast('Сначала напиши сообщение');return;}
+  const text=['Surf Spots — обратная связь','Тема: '+topic,'Сообщение: '+message].join('\\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast('Обращение скопировано')).catch(()=>fallbackCopy(text));
+  }else fallbackCopy(text);
+}
+function fallbackCopy(value){
+  const area=document.createElement('textarea');
+  area.value=value;document.body.appendChild(area);area.select();
+  try{document.execCommand('copy');toast('Обращение скопировано')}catch(e){toast('Не удалось скопировать текст вручную')}
+  area.remove();
+}
 function restart(){prefs={};document.querySelectorAll('.selected').forEach(e=>{if(!e.closest('#sortChips'))e.classList.remove('selected')});show(1)}
 function pick(el,key,value){el.parentElement.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');prefs[key]=value}
 function toggle(el){el.classList.toggle('selected');prefs[el.textContent.trim()]=el.classList.contains('selected')}
@@ -256,7 +315,7 @@ function bestIndex(){return cafes.map((c,i)=>i).sort((a,b)=>cafes[a].load-cafes[
 function setSort(el){document.querySelectorAll('#sortChips .chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');sortKey=el.dataset.s;renderResults()}
 function renderResults(){
   document.getElementById('results').innerHTML=order().map((i,pos)=>{const c=cafes[i],n=evOf(i).length;return `
-  <div class="card"><div class="row"><span class="badge">${pos===0?'Лучший вариант':'Вариант '+(pos+1)}</span>${loadHtml(c.load)}</div>
+  <div class="card"><div class="cafe-photo"><img src="${c.photo}" alt="Иллюстративное фото кофейни Surf Coffee ${c.name}" loading="lazy" onerror="this.style.display='none'"><span class="photo-caption">Иллюстративное фото</span></div><div class="row"><span class="badge">${pos===0?'Лучший вариант':'Вариант '+(pos+1)}</span>${loadHtml(c.load)}</div>
   <div class="name" onclick="detail(${i})">Surf Coffee · ${c.name}</div><div class="muted">${c.area} · ${c.walk} пешком</div>
   <div class="facts"><span class="fact"><b>${c.seats}</b> мест</span><span class="fact"><b>${c.sockets}</b> розеток</span><span class="fact"><b>${n}</b> ${n===1?'событие':n<5&&n>1?'события':'событий'}</span></div>
   <div class="links"><button class="link dark" onclick="detail(${i})">Открыть спот →</button><button class="link" onclick="showEvents(${i})">Мероприятия →</button></div></div>`}).join('');
@@ -268,6 +327,7 @@ function renderMap(){
 function detail(i){
   const c=cafes[i];window.currentCafe=i;
   document.getElementById('detailName').textContent=c.name;
+  document.getElementById('detailPhoto').innerHTML='<img src="'+c.photo+'" alt="Иллюстративное фото кофейни Surf Coffee '+c.name+'" onerror="this.style.display=\'none\'">';
   document.getElementById('detailLoad').innerHTML=loadHtml(c.load)+'<span style="font-size:11px;opacity:.75"> · сейчас</span>';
   document.getElementById('detailAddr').textContent='Surf Coffee · '+c.area;
   document.getElementById('stSeats').textContent=c.seats;
